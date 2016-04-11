@@ -6,6 +6,7 @@ import {bfs} from './bfs.js';
 import {dfs} from './dfs.js';
 import colors from 'colors';
 import {deDupe} from './dupes';
+import {anagram, anagramSort} from './anagram';
 
 colors.setTheme({
   rainbow: 'rainbow',
@@ -50,3 +51,11 @@ let dupeArr = [2, 5, 8, 4, 2, 'john', 'john'];
 let duped = deDupe(dupeArr);
 
 console.log('deduped'.error, duped);
+
+// Aanagram
+console.log('anagram 1'.rainbow, anagram('God', 'dog')); //true
+console.log('anagram 1'.rainbow, anagram('Clint Eastwood', 'Old West Action')); //true
+console.log('anagram 1'.rainbow, anagram('aa a', 'b')); //false
+console.log('anagram 2'.rainbow, anagramSort('God', 'dog')); //true
+console.log('anagram 2'.rainbow, anagramSort('Clint Eastwood', 'Old West Action')); //true
+console.log('anagram 2'.rainbow, anagramSort('aa a', 'b')); //false
