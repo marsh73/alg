@@ -1,37 +1,41 @@
 'use strict';
 
-import {shuffle} from './shuffle.js';
-import {tree} from './familyTree.js';
-import {bfs} from './bfs.js';
-import {dfs} from './dfs.js';
-import colors from 'colors';
-import {deDupe} from './dupes';
-import {anagram, anagramSort} from './anagram';
+import {shuffle} from './js/shuffle.js';
+import {tree} from './js/familyTree.js';
+import {bfs} from './js/bfs.js';
+import {dfs} from './js/dfs.js';
+import {deDupe} from './js/dupes';
+import {anagram, anagramSort} from './js/anagram';
+import {checkSchedule} from './js/schedule';
+import {schedule} from './js/data/schedule';
 
-colors.setTheme({
-  rainbow: 'rainbow',
-  error: 'red'
-});
+let app = document.createElement('div')
+app.id = 'App'
+document.body.appendChild(app)
 
+function createEl(elem, content) {
+  let el = document.createElement(elem);
+  el.innerHTML = content;
+  return el;
+}
 
 // Shuffle
 let cards = [1,5,3];
 let cards2 = shuffle(cards, 5);
-console.log('shuffled'.rainbow, cards2);
+app.appendChild(createEl('div', '<h4>shuffled cards</h4><div>'+
+    cards2+'</div>'))
 
 
 // breadth first search family tree
-var girl = bfs(tree, 'girl');
-var son = bfs(tree, 'son');
-console.log('that\'s my boy'.rainbow, son);
-console.log('that\'s my baby girl'.rainbow, girl);
+app.appendChild(createEl('div', '<h4>breadth first find kids</h4><div>son = '+
+    JSON.stringify(bfs(tree, 'son'))+'</div><div>girl = '+
+    JSON.stringify(bfs(tree, 'girl'))+'</div>'))
 
 
 // depth first search family tree
-var boy = dfs(tree, 'boy');
-var daughter = dfs(tree, 'daughter');
-console.log('that\'s my baby boy'.rainbow, boy);
-console.log('that\'s my girl'.rainbow, daughter);
+app.appendChild(createEl('div', '<h4>depth first find kids</h4><div>son = '+
+    JSON.stringify(dfs(tree, 'boy'))+'</div><div>daughter = '+
+    JSON.stringify(dfs(tree, 'daughter'))+'</div>'))
 
 // sample reduce practice
 let numbs = [1,8,3,5, 9];
@@ -43,19 +47,37 @@ let bottom = numbs.reduce( (prev, current) => {
   return prev = prev < current ? prev : current;
 });
 
-console.log('top'.error, top);
-console.log('bottom'.error, bottom);
+app.appendChild(createEl('div', '<h4>Reduce it</h4><div>top = '+ top+'</div><div>daughter = '+ bottom+'</div>'))
 
 // dedupe
 let dupeArr = [2, 5, 8, 4, 2, 'john', 'john'];
 let duped = deDupe(dupeArr);
 
-console.log('deduped'.error, duped);
+console.log('deduped', duped);
 
 // Aanagram
-console.log('anagram 1'.rainbow, anagram('God', 'dog')); //true
-console.log('anagram 1'.rainbow, anagram('Clint Eastwood', 'Old West Action')); //true
-console.log('anagram 1'.rainbow, anagram('aa a', 'b')); //false
-console.log('anagram 2'.rainbow, anagramSort('God', 'dog')); //true
-console.log('anagram 2'.rainbow, anagramSort('Clint Eastwood', 'Old West Action')); //true
-console.log('anagram 2'.rainbow, anagramSort('aa a', 'b')); //false
+console.log('anagram 1', anagram('God', 'dog')); //true
+console.log('anagram 1', anagram('Clint Eastwood', 'Old West Action')); //true
+console.log('anagram 1', anagram('aa a', 'b')); //false
+console.log('anagram 2', anagramSort('God', 'dog')); //true
+console.log('anagram 2', anagramSort('Clint Eastwood', 'Old West Action')); //true
+console.log('anagram 2', anagramSort('aa a', 'b')); //false
+
+
+// schedule
+let appt =   {
+  time: 'June 1, 2015 4:00 pm',
+  duration: 30
+}
+let appt2 =   {
+  time: 'June 2, 2015 4:00 pm',
+  duration: 30
+}
+let appt3 =   {
+  time: 'June 1, 2015 11:00 am',
+  duration: 90
+}
+
+console.log('check scheule', checkSchedule(schedule, appt)) //False = conflict
+console.log('check schedule', checkSchedule(schedule, appt2)) //True = Available
+console.log('check schedule', checkSchedule(schedule, appt3)) //Fale = conflict
