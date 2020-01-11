@@ -8,6 +8,9 @@ import {deDupe} from './js/dupes';
 import {anagram, anagramSort} from './js/anagram';
 import {checkSchedule} from './js/schedule';
 import {schedule} from './js/data/schedule';
+import { JSDOM } from 'jsdom';
+
+const { document } = (new JSDOM(`...`)).window;
 
 let app = document.createElement('div')
 app.id = 'App'
